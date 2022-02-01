@@ -7,6 +7,8 @@ import sys
 import random
 import time
 
+
+
 class beacFrame:
 	
 	def __init__(self, essid, bssid, ts, interval, oui):
@@ -136,19 +138,18 @@ def frameParse(frame):
 		# pass
 		
 		#bf(frame)
-	# if frame.haslayer(Dot11Auth):
-	# 	print("hit")
-	# 	authf(frame)
+	if frame.haslayer(Dot11Auth):
+		print("hit")
+		authf(frame)
 
-	# if frame.haslayer(Dot11AssoReq):
-	# 	print("assoreq")
+	if frame.haslayer(Dot11AssoReq):
+		print("assoreq")
 	
-	# if frame.haslayer(Dot11AssoResp):
-	# 	print("assoresp")
-	if not (frame.haslayer(Dot11Beacon)):
-		print(frame)
+	if frame.haslayer(Dot11AssoResp):
+		print("assoresp")
 
-
+	if not frame.haslayer(DOT11Beacon):
+		print(frame.layers())
 
 def countdown():
 	print("I will begin scanning in...")
