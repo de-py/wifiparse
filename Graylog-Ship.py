@@ -44,14 +44,14 @@ def isMonitor():
 	
 
 	print("Checking for monitor mode...")
-	time.sleep(2)
+	#time.sleep(2)
 
 
 	result = subprocess.run(["iwconfig", winter], stdout=subprocess.PIPE, text=True)
 	
 	if "Mode:Monitor" in result.stdout:
 		print("{} is in monitor mode.".format(sys.argv[1]))
-		time.sleep(2)
+		#time.sleep(2)
 		return True
 	
 	else:
@@ -60,11 +60,11 @@ def isMonitor():
 
 def setMonitor():
 	print("Setting up monitor mode")
-	time.sleep(2)
+	#time.sleep(2)
 	subprocess.run(["ifconfig", sys.argv[1], "down"])	
 	subprocess.run(["iwconfig", sys.argv[1], "mode", "monitor"])
 	subprocess.run(["ifconfig", sys.argv[1], "up"])	
-	print("Done")
+	#print("Done")
 	time.sleep(2)
 	
 
@@ -174,7 +174,7 @@ def main():
 	thread.start()
 	
 	# Countdown for dramatic effect and to see what was just displayed before the stream of data.
-	countdown()
+	#countdown()
 
 	# Begin to sniff 802.11 frames	
 	sniff(iface=sys.argv[1],prn=frameParse,store=0)
