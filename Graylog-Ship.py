@@ -136,6 +136,7 @@ def frameParse(frame):
 		pass
 		#bf(frame)
 	if frame.haslayer(Dot11Auth):
+		authf(frame)
 
 def countdown():
 	print("I will begin scanning in...")
