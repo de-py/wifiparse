@@ -133,10 +133,13 @@ def frameParse(frame):
 	# Dott11Auth
 	# For all frame types, determine the signal strength and include it
 	if frame.haslayer(Dot11Beacon):
-		pass
-		#bf(frame)
+		#pass
+		bf(frame)
 	if frame.haslayer(Dot11Auth):
+		print("hit")
 		authf(frame)
+
+	#if frame.
 
 def countdown():
 	print("I will begin scanning in...")
