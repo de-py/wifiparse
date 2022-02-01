@@ -148,7 +148,7 @@ def frameParse(frame):
 	if frame.haslayer(Dot11AssoResp):
 		print("assoresp")
 
-	if not frame.haslayer(DOT11Beacon):
+	if not frame.haslayer(Dot11Beacon):
 		print(frame.layers())
 
 def countdown():
