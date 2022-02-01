@@ -132,19 +132,23 @@ def frameParse(frame):
 	# Dot11AssoResp
 	# Dott11Auth
 	# For all frame types, determine the signal strength and include it
-	if frame.haslayer(Dot11Beacon):
-		pass
+	# if frame.haslayer(Dot11Beacon):
+		# pass
 		
 		#bf(frame)
-	if frame.haslayer(Dot11Auth):
-		print("hit")
-		authf(frame)
+	# if frame.haslayer(Dot11Auth):
+	# 	print("hit")
+	# 	authf(frame)
 
-	if frame.haslayer(Dot11AssoReq):
-		print("assoreq")
+	# if frame.haslayer(Dot11AssoReq):
+	# 	print("assoreq")
 	
-	if frame.haslayer(Dot11AssoResp):
-		print("assoresp")
+	# if frame.haslayer(Dot11AssoResp):
+	# 	print("assoresp")
+	if not (frame.haslayer(Dot11Beacon)):
+		print(frame)
+
+
 
 def countdown():
 	print("I will begin scanning in...")
