@@ -139,7 +139,7 @@ def frameParse(frame):
 		
 		#bf(frame)
 	if frame.haslayer(Dot11Auth):
-		print("hit")
+		print("dot11auth")
 		authf(frame)
 
 	if frame.haslayer(Dot11AssoReq):
@@ -148,8 +148,8 @@ def frameParse(frame):
 	if frame.haslayer(Dot11AssoResp):
 		print("assoresp")
 
-	if not frame.haslayer(Dot11Beacon):
-		print(frame.layers())
+	#if not frame.haslayer(Dot11Beacon):
+		#print(frame.layers())
 
 def countdown():
 	print("I will begin scanning in...")
