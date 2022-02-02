@@ -30,7 +30,7 @@ class beacFrame:
 			"_type": self.type,
 			"_essid": self.essid,
 			"_bssid": self.bssid,
-			"timestamp": self.ts,
+			"_timestamp": self.ts,
 			"_interval": self.interval,
 			"_signal_strength": self.signal_strength,
 			"_oui": self.oui
