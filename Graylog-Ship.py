@@ -29,7 +29,7 @@ class beacFrame:
 			"_type": self.type,
 			"_essid": self.essid,
 			"_bssid": self.bssid,
-			"_timestamp": self.ts,
+			"timestamp": self.ts,
 			"_interval": self.interval,
 			"_oui": self.oui
 		}
@@ -148,6 +148,7 @@ def sendFrame(frame_object):
 		"version": "1.1",
 		"host": "D-Kali",
 		"short_message": frame_object.type
+		
 	}
 
 	send_dict.update(frame_object.json())
