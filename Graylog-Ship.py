@@ -32,6 +32,7 @@ class beacFrame:
 			"_bssid": self.bssid,
 			"timestamp": self.ts,
 			"_interval": self.interval,
+			"_signal_strength": self.signal_strength,
 			"_oui": self.oui
 		}
 
@@ -133,7 +134,7 @@ def sendFrame(frame_object):
 	send_dict.update(frame_object.json())
 
 	resp = requests.post(url, json=send_dict)
-	#print(resp)
+	print(resp)
 
 def frameParse(frame):
 	# If the frame is a beacon frame (has the beacon layer)
