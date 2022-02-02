@@ -26,12 +26,12 @@ class beacFrame:
 
 	def json(self):
 		frame_dict = {
-			"type": self.type,
-			"essid": self.essid,
-			"bssid": self.bssid,
-			"timestamp": self.ts,
-			"interval": self.interval,
-			"oui": self.oui
+			"_type": self.type,
+			"_essid": self.essid,
+			"_bssid": self.bssid,
+			"_timestamp": self.ts,
+			"_interval": self.interval,
+			"_oui": self.oui
 		}
 
 		return frame_dict
@@ -146,7 +146,8 @@ def sendFrame(frame_object):
 	url = "http://{}:{}/gelf".format(gelf_ip,gelf_port)
 	send_dict = {
 		"version": "1.1",
-		"host": "D-Kali"
+		"host": "D-Kali",
+		"short_message": frame_object.type
 	}
 
 	send_dict.update(frame_object.json())
