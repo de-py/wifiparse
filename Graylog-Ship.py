@@ -122,7 +122,7 @@ def sendFrame(frame_object):
 		
 	}
 
-	# Merging Frame Object Dict with Gelf Format Dict
+	# Merging Frame Object Dict with Gelf Format Dict (Aggregating data)
 	send_dict.update(frame_object.json())
 
 	# Sending Post Request
