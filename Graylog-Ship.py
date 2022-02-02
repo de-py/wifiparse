@@ -139,8 +139,11 @@ def authf(frame):
 	authF = authFrame(essid, bssid, ts, oui)
 	
 	print(authF)
-def sendFrame(frame_object):
-	url = "http://172.30.4.99/gelf"
+def sendFrame(frame_object, ip, port):
+	gelf_ip = "172.30.4.99"
+	gelf_port = "12201"
+
+	url = "http://{}:{}/gelf".format(gelf_ip,gelf_port)
 	send_dict = {
 		"version": "1.1",
 		"host": "D-Kali"
@@ -194,6 +197,7 @@ def main():
 	# If interface is not in monitor mode, set it to monitor mode.
 	if not isMonitor():
 		setMonitor()
+
 
 	# Threading seen in video. Added basic randomInt function.	
 	thread = threading.Thread(target=channelHop, name="ChannelHopper")
