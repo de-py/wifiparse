@@ -160,7 +160,7 @@ def frameParse(frame):
 
 
 def countdown():
-	print("I will begin scanning in...")
+	print("I will begin scanning and sending frames in...")
 	time.sleep(1)
 	print("3")
 	time.sleep(1)
@@ -168,6 +168,7 @@ def countdown():
 	time.sleep(1)
 	print("1")
 	time.sleep(1)
+	print("(Running)")
 
 
 DEBUG = False
