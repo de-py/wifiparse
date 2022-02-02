@@ -125,7 +125,7 @@ def sendFrame(frame_object):
 	# Merging Frame Object Dict with Gelf Format Dict (Aggregating data)
 	send_dict.update(frame_object.json())
 
-	# Sending Post Request
+	# Sending Post Request to Graylog
 	resp = requests.post(url, json=send_dict)
 
 	if DEBUG:
