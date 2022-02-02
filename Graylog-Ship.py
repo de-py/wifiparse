@@ -127,6 +127,7 @@ def sendFrame(frame_object):
 
 	# Sending Post Request
 	resp = requests.post(url, json=send_dict)
+
 	if DEBUG:
 		print("Server Response:{}".format(resp.status_code))
 
