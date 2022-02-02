@@ -16,11 +16,24 @@ class beacFrame:
 		self.bssid = bssid
 		self.ts = ts
 		self.interval = interval
+		self.type = "beacon"
 		self.oui = oui
 
 
 	def __str__(self):
-		return "ESSID:{}, BSSID:{}, Timestamp:{}, Beacon Interval:{}, Vendor OUI:{}".format(self.essid, self.bssid, self.ts, self.interval, self.oui)
+		return "Type:{}, ESSID:{}, BSSID:{}, Timestamp:{}, Beacon Interval:{}, Vendor OUI:{}".format(self.type, self.essid, self.bssid, self.ts, self.interval, self.oui)
+
+	def json(self):
+		frame_dict = {
+			"essid": self.essid,
+			"bssid": self.bssid,
+			"timestamp": self.ts,
+			"interval": self.interval,
+			"type": self.type,
+			"oui": self.oui
+		}
+
+		return frame_dict
 
 class authFrame:
 	def __init__(self, essid, bssid, ts, oui):
@@ -98,7 +111,7 @@ def bf(frame):
 	# Assign as object becuase why not
 	bF = beacFrame(essid, bssid, ts, interval, oui)
 	
-	print(bF)
+	print(bF.json())
 
 def authf(frame):
 	dotElt = frame.getlayer(Dot11Elt)
@@ -135,18 +148,16 @@ def frameParse(frame):
 	# Dott11Auth
 	# For all frame types, determine the signal strength and include it
 	if frame.haslayer(Dot11Beacon):
-		pass
-		
-		#bf(frame)
+		bf(frame)
 	if frame.haslayer(Dot11Auth):
 		print("dot11auth")
-		authf(frame)
+		#authf(frame)
 
-	if frame.haslayer(Dot11AssoReq):
-		print("assoreq")
+	#if frame.haslayer(Dot11AssoReq):
+	#	print("assoreq")
 	
-	if frame.haslayer(Dot11AssoResp):
-		print("assoresp")
+	#if frame.haslayer(Dot11AssoResp):
+	#	print("assoresp")
 
 	#if not frame.haslayer(Dot11Beacon):
 		#print(frame.layers())
