@@ -140,7 +140,7 @@ def authf(frame):
 	
 	print(authF)
 def sendFrame(frame_object):
-	gelf_ip = "172.30.4.99"
+	gelf_ip = "172.20.4.99"
 	gelf_port = "12201"
 
 	url = "http://{}:{}/gelf".format(gelf_ip,gelf_port)
