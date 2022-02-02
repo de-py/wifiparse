@@ -161,8 +161,9 @@ def frameParse(frame):
 	# For all frame types, determine the signal strength and include it
 	if frame.haslayer(Dot11Beacon):
 		frame_object = bf(frame)
-		sendFrame(frame_object)
-
+		if frame_object:
+			sendFrame(frame_object)
+	
 		
 
 
