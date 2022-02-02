@@ -12,17 +12,18 @@ import requests
 
 class beacFrame:
 	
-	def __init__(self, essid, bssid, ts, interval, oui):
+	def __init__(self, essid, bssid, ts, interval, oui, signal_strength):
 		self.essid = essid
 		self.bssid = bssid
 		self.ts = ts
 		self.interval = interval
 		self.type = "beacon"
 		self.oui = oui
+		self.signal_strength = signal_strength
 
 
 	def __str__(self):
-		return "Type:{}, ESSID:{}, BSSID:{}, Timestamp:{}, Beacon Interval:{}, Vendor OUI:{}".format(self.type, self.essid, self.bssid, self.ts, self.interval, self.oui)
+		return "Type:{}, ESSID:{}, BSSID:{}, Timestamp:{}, Beacon Interval:{}, Signal Strength:{}, Vendor OUI:{}".format(self.type, self.essid, self.bssid, self.ts, self.interval, self.signal_strength, self.oui)
 
 	def json(self):
 		frame_dict = {
@@ -93,12 +94,14 @@ def bf(frame):
 	dot11 = frame.getlayer(Dot11)
 	dotbeacon = frame.getlayer(Dot11Beacon)
 	vendor = frame.getlayer(Dot11EltVendorSpecific)
+	radio_tap = frame.getlayer(RadioTap)
 
 	# Pull the values
 	essid = dotElt.info.decode("utf-8")
 	bssid = dot11.addr2
 	ts = dotbeacon.timestamp
 	interval = dotbeacon.beacon_interval
+	signal_strength = radio_tap.dBm_AntSignal
 	oui = vendor.oui
 
 	# Make sure we skip the essids with null bytes
@@ -110,35 +113,11 @@ def bf(frame):
 		return
 	
 	# Assign as object becuase why not
-	frame_object = beacFrame(essid, bssid, ts, interval, oui)
+	frame_object = beacFrame(essid, bssid, ts, interval, oui, signal_strength)
 	
 	return frame_object
 
-def authf(frame):
-	dotElt = frame.getlayer(Dot11Elt)
-	dot11 = frame.getlayer(Dot11)
-	dotbeacon = frame.getlayer(Dot11Beacon)
-	vendor = frame.getlayer(Dot11EltVendorSpecific)
 
-	# Pull the values
-	essid = dotElt.info.decode("utf-8")
-	bssid = dot11.addr2
-	ts = dotbeacon.timestamp
-	interval = dotbeacon.beacon_interval
-	oui = vendor.oui
-
-	# Make sure we skip the essids with null bytes
-	if not all((ord(i) > 30) and (ord(i) < 128) for i in essid):
-		return
-
-	# Inappropriate essid removed from list
-	if bssid == "00:5f:67:9c:3c:a8":
-		return
-	
-	# Assign as object becuase why not
-	authF = authFrame(essid, bssid, ts, oui)
-	
-	print(authF)
 def sendFrame(frame_object):
 	gelf_ip = "172.20.4.99"
 	gelf_port = "12201"
@@ -154,12 +133,13 @@ def sendFrame(frame_object):
 	send_dict.update(frame_object.json())
 
 	resp = requests.post(url, json=send_dict)
-	print(resp)
+	#print(resp)
 
 def frameParse(frame):
 	# If the frame is a beacon frame (has the beacon layer)
 
 	# Need to add both association and authentication requests/responses
+	# Skipping though because not enough data on campus for testing frames
 	# Dot11AssoReq
 	# Dot11AssoResp
 	# Dott11Auth
@@ -168,6 +148,7 @@ def frameParse(frame):
 		frame_object = bf(frame)
 		if frame_object:
 			sendFrame(frame_object)
+			print(frame_object)
 	
 		
 
