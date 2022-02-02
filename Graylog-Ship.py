@@ -139,7 +139,7 @@ def authf(frame):
 	authF = authFrame(essid, bssid, ts, oui)
 	
 	print(authF)
-def sendFrame(frame_object, ip, port):
+def sendFrame(frame_object):
 	gelf_ip = "172.30.4.99"
 	gelf_port = "12201"
 
