@@ -148,7 +148,7 @@ def frameParse(frame):
 		frame_object = bf(frame)
 		if frame_object:
 			sendFrame(frame_object)
-			print(frame_object)
+			#print(frame_object)
 	
 		
 
