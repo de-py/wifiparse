@@ -6,6 +6,7 @@ import subprocess
 import sys
 import random
 import time
+import requests
 
 
 
@@ -25,11 +26,11 @@ class beacFrame:
 
 	def json(self):
 		frame_dict = {
+			"type": self.type,
 			"essid": self.essid,
 			"bssid": self.bssid,
 			"timestamp": self.ts,
 			"interval": self.interval,
-			"type": self.type,
 			"oui": self.oui
 		}
 
@@ -109,9 +110,9 @@ def bf(frame):
 		return
 	
 	# Assign as object becuase why not
-	bF = beacFrame(essid, bssid, ts, interval, oui)
+	frame_object = beacFrame(essid, bssid, ts, interval, oui)
 	
-	print(bF.json())
+	return frame_object
 
 def authf(frame):
 	dotElt = frame.getlayer(Dot11Elt)
@@ -138,6 +139,17 @@ def authf(frame):
 	authF = authFrame(essid, bssid, ts, oui)
 	
 	print(authF)
+def sendFrame(frame_object):
+	url = "http://172.30.4.99/gelf"
+	send_dict = {
+		"version": "1.1",
+		"host": "D-Kali"
+	}
+
+	send_dict.update(frame_object.json())
+
+	resp = requests.post(url, json=send_dict)
+	print(resp)
 
 def frameParse(frame):
 	# If the frame is a beacon frame (has the beacon layer)
@@ -148,19 +160,22 @@ def frameParse(frame):
 	# Dott11Auth
 	# For all frame types, determine the signal strength and include it
 	if frame.haslayer(Dot11Beacon):
-		bf(frame)
+		frame_object = bf(frame)
+		sendFrame(frame_object)
+
+		
+
+
 	if frame.haslayer(Dot11Auth):
 		print("dot11auth")
 		#authf(frame)
 
-	#if frame.haslayer(Dot11AssoReq):
-	#	print("assoreq")
+	if frame.haslayer(Dot11AssoReq):
+		print("assoreq")
 	
-	#if frame.haslayer(Dot11AssoResp):
-	#	print("assoresp")
+	if frame.haslayer(Dot11AssoResp):
+		print("assoresp")
 
-	#if not frame.haslayer(Dot11Beacon):
-		#print(frame.layers())
 
 def countdown():
 	print("I will begin scanning in...")
