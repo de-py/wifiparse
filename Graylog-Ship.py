@@ -114,6 +114,7 @@ def sendFrame(frame_object):
 	gelf_port = "12201"
 
 	url = "http://{}:{}/gelf".format(gelf_ip,gelf_port)
+
 	send_dict = {
 		"version": "1.1",
 		"host": "D-Kali",
@@ -121,11 +122,14 @@ def sendFrame(frame_object):
 		
 	}
 
+	# Merging Frame Object Dict with Gelf Format Dict
 	send_dict.update(frame_object.json())
 
+	# Sending Post Request
 	resp = requests.post(url, json=send_dict)
 	if DEBUG:
 		print("Server Response:{}".format(resp.status_code))
+
 def frameParse(frame):
 
 	# Need to add both association and authentication requests/responses
