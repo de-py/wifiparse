@@ -170,7 +170,7 @@ def countdown():
 	time.sleep(1)
 
 
-DEBUG = True
+DEBUG = False
 
 def main():
 	# If interface is not in monitor mode, set it to monitor mode.
